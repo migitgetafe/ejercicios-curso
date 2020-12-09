@@ -1,0 +1,81 @@
+<html>
+
+<head>
+    <title>
+        ADIVINA adivinanza
+    </title>
+    <!--
+ *
+ *El código de esta script, es un poco misterioso. Algún programador Clase "C", no ha usado
+ *nombres descriptivos y ahora, nos toca pegarnos y descubrir qué narices hace este código,
+ *para poder usarlo en nuestro proyecto.
+ *
+ *
+ *Se pide:
+ *
+ *1) Adivinar la funcionalidad del método adivinaQueHace
+ *2) Una vez descubierto, aplicar un nombre apropiado al método
+ *3) Idear un método equivalente, pero distinto. Es decir, crear un método
+ *que haga lo mismo que adivinaQueHace, pero de otra manera.
+ *4) EXTRA: Sólo si resolviste los puntos anteriores, implementa una versión recursiva
+-->
+    <script language="javascript">
+        function controlPalindromoOriginal() {
+            var controlador = true;
+            var cadena = document.getElementById("palabra").value; 
+            var inicializador = 0;
+            var contador = cadena.length - 1; // cuenta número de caracteres - 1
+            console.log(contador);
+            while ((inicializador < contador) && (controlador)) {
+                console.log('hey');
+                if (cadena.charAt(inicializador) == cadena.charAt(contador)) {
+                    controlador = true;
+                    console.log("es true");           
+                } else {
+                    controlador = false;
+                    console.log("es false");
+                }
+                inicializador++;
+                contador--;
+            }           
+            if (controlador) {
+                document.getElementById("p1").innerHTML = "La palabra introducida SÍ es un palíndromo";
+            }
+            else {
+                document.getElementById("p1").innerHTML = "La palabra introducida NO es un palíndromo";
+            }
+            return controlador;
+        }
+        
+        
+    </script>
+    <script>
+        // MI SCRIPT EQUIVALENTE
+        function controlPalindromo() {
+            var cadena = document.getElementById("palabra").value;
+            var mismaCadena = document.getElementById("palabra").value;
+            var rompoCadena = cadena.split("");
+            var rompoMismaCadena = mismaCadena.split("");
+            var rompoCadenaReverse = rompoMismaCadena.reverse();
+            var joinRompoCadena = rompoCadena.join("");
+            var joinRompoCadenaReverse = rompoCadenaReverse.join("");
+            if (joinRompoCadena == joinRompoCadenaReverse) {
+                console.log("es palindromo");
+            }
+            else {
+                console.log("NO es palindromo");
+            }
+         }
+
+    </script>
+</head>
+
+<body>
+    <label for="palabra">PALABRA</label>
+    <input type="text" id="palabra">
+    <button onclick="controlPalindromo();">Empieza</button>
+    <p id="p1"></p>
+</body>
+
+</html>
+
