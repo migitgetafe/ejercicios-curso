@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Cálculo Índice Masa Corporal</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <style>
+        body {
+            margin:0;
+            padding: 50px;
+            font-size: 1.3vw;
+            text-shadow: 2px 2px 4px black;
+            color: gold;
+            background-color: steelblue;
+            font-family: Verdana;
+
+        }
+        input {
+            margin-right: 10px;
+        }
+        #imc_container {
+            margin-top: 30px;
+        }
+        #imc_container span {
+            color: orange;
+        }
+        #image_container {
+            margin-top:30px;
+            display: flex;
+            justify-content: center;
+        } 
+        .imagen_imc {
+            padding: 3px;
+            width: 400px;
+            border: 6px double moccasin;
+        }  
+    </style>
+    <!-- versión 1 -->
+    <script src='main.js'></script>
+    <!-- versión 2 -->
+    <script src='main-2.js'></script>
+</head>
+<body id="cuerpo">
+    <label for="altura">Introduzca su altura en metros</label>
+    <input name="altura" id="altura" type="number">
+    <label for="peso">|| Introduzca su peso en kgs</label>
+    <input name="peso" id="peso" type="number">
+    <input type="button" value="CALCULAR" onclick="calcularIMC()"><br>
+    <div id="imc_container"></div>
+    <div id="image_container">
+        
+    </div>
+</body>
+</html>
