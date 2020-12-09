@@ -1,3 +1,4 @@
+// IMAGEN SIN HOOK
 function calcularIMC (){
     // OBTENER VALOR DEL CAMPO ALTURA
     let altura = document.getElementById('altura').value;
