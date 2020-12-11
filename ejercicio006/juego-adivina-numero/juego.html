@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Adivina el número</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">    
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            background-color: slategrey;
+            color: gold;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 30px;
+            font-weight: 700;   
+        }
+        .container_input {
+            display: flex;
+            flex-direction: column;
+        }
+        input {
+            height: 20px;
+            text-align: center;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 20px;
+            padding:8px 0;
+        }
+        input[type="submit"] {
+            margin-top: 10px;
+            background-color: silver;
+            color: black;
+            border: none;
+            height: 40px;
+            line-height: 40px;
+            font-size: 20px;
+            padding: 0 10px;
+        } 
+        .container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .marcador_vidas {
+            display: flex;
+            flex-direction: column;
+            justify-items: center;
+            align-items: center;
+            margin-top: 20px;
+            font-size:27px;
+        } 
+        .marcador_vidas img {
+            width: 80px;
+            margin-top: 20px;  
+        }
+        .cambiar_jugador {
+            display: none;
+        }
+    </style>
+    <script>
+        window.onload = compruebaCookie(); // COMPRUEBA QUE HAY UNA COOKIE CON CONTENIDO, SI NO LA HAY REDIRECCION A INICIO
+        window.onload = adivinaNumero;
+        
+        var comprobacion_cookie = window.localStorage.getItem("Nombre del jugador");
+        console.log(comprobacion_cookie);
+        // COMPRUEBO QUE TENGO UNA COOKIE CON CONTENIDO
+        function compruebaCookie() {
+            var comprobacion_cookie = window.localStorage.getItem("Nombre del jugador");
+            console.log("cookie=" + comprobacion_cookie);
+            // SI NO HAY COOKIE redireccionar
+             if ((comprobacion_cookie == "SIN-JUGADOR") || (!comprobacion_cookie)) {
+                setInterval(function(){ window.location.href = 'intro-juego.html'; }, 200);                      
+            } 
+            else { // SI HAY COOKIE, no hacer nada 
+             } 
+        }
+
+        //GENERO NUMERO ALEATORIO Y CAMBIO CONTROL A FALSE
+        var numero_aleatorio = Math.random() * (100 - 1) + 1; // genero nº aleatorio y lo guardo en variable 'número'
+        var numero = Math.round(numero_aleatorio);
+        console.log("numero aleatorio =" + numero);
+        var score = 6; // INICIALIZO VARIABLE CON NÚMERO DE VIDAS ('SCORE')
+       
+        
+        function adivinaNumero () {
+            // MENSAJE BIENVENIDA
+            document.getElementById('mensaje').innerHTML = "Bienvenido " + comprobacion_cookie;
+            // INICIALIZO TEXTO MARCADOR DE VIDAS
+            var marcador = document.getElementById('marcador_vidas');
+            marcador.innerHTML = "Vidas restantes: " + score;  
+            // LEO EL NÚMERO INTRODUCIDO POR EL JUGADOR
+            var numeroJugador = document.getElementById('numero_jugador').value;
+            console.log("numero jugador =" + numeroJugador);
+            // SI LOS NÚMEROS COINCIDEN
+            if (numero == numeroJugador) {
+                console.log("entra");
+                marcador.innerHTML = 'NÚMERO ACERTADO <br /> <img src="img/victoria.png">';
+                var input_numero = document.getElementById("container_input");
+                input_numero.style.display="none";
+                finDeJuego();
+            } 
+            //SI EL NÚMERO DEL JUGADOR ES MENOR               
+            else  if (numeroJugador < numero) {
+                score-- ;
+                marcador.innerHTML = "El número ES MAYOR <br /> Vidas restantes: " + score;
+                console.log("es mayor");
+                console.log(score);
+                // Y SI ADEMÁS LOS INTENTOS HAN LLEGADO A CERO --> FIN DEL JUEGO
+                if (score == 0) {
+                    var input_numero = document.getElementById("container_input");
+                    input_numero.style.display="none";
+                    var marcador = document.getElementById('marcador_vidas');
+                    marcador.innerHTML = "HAS FALLADO! <br /><img src='img/derrota.png'><br />El número correcto era " + numero;
+                    finDeJuego();
+                }
+            }
+            else  if (numeroJugador > numero) {
+                //SI EL NÚMERO DEL JUGADOR ES MAYOR 
+                score-- ;
+                marcador.innerHTML = "El número ES MENOR <br /> Vidas restantes: " + score;
+                console.log("es mayor");
+                console.log(score);
+                // Y SI ADEMÁS LOS INTENTOS HAN LLEGADO A CERO --> FIN DEL JUEGO
+                if (score == 0) {
+                    var input_numero = document.getElementById("container_input");
+                    input_numero.style.display="none";
+                    var marcador = document.getElementById('marcador_vidas');
+                    marcador.innerHTML = "HAS FALLADO! <br /><img src='img/derrota.png'><br />El número correcto era " + numero;
+                    finDeJuego();
+                }
+            }
+            function finDeJuego() {
+            
+                    document.getElementById('cambiar_jugador').style.display = 'block';
+                    document.getElementById('mensaje').style.display = "none";
+                    localStorage.clear();
+                    localStorage.setItem('Nombre del jugador', 'SIN-JUGADOR');
+            
+        }
+        }
+        // AL PULSAR EN 'CAMBIAR JUGADOR' REDIRECCIONO A LA PANTALLA DE INICIO
+        function cambiarJugador() {
+            window.location.href = 'intro-juego.html';
+        }
+        
+        
+    </script>
+    
+</head>
+<body>
+    <div class="container">
+        <div id="mensaje" class="mensaje">
+
+        </div>
+        <div id="container_input" class="container_input">
+            <label for="numero">Adivina el número</label>
+            <input id="numero_jugador" type="number" name="numero">
+            <input type="submit" onclick="adivinaNumero()">
+        </div>
+    
+        <div id="marcador_vidas" class="marcador_vidas">
+
+        </div>
+        <div id="cambiar_jugador" class="cambiar_jugador">
+            <input type="submit" onclick="cambiarJugador()"  value="Cambiar de jugador" /> 
+        </div>
+    </div>
+    
+    
+    
+</body>
+</html>

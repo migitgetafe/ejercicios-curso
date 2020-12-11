@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Adivina el número</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">    
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            background-color: slategrey;
+            color: gold;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 30px;
+            font-weight: 700;   
+        }
+        .container_input {
+            display: flex;
+            flex-direction: column;
+        }
+        .container_input span {
+            color: brown;
+        } 
+        input {
+            height: 20px;
+            text-align: center;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 20px;
+            padding:8px 0;
+        }
+        input[type="submit"] {
+            margin-top: 10px;
+            background-color: silver;
+            color: black;
+            border: none;
+            height: 40px;
+            line-height: 40px;
+            font-size: 20px;
+            padding: 0;
+        } 
+        .container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .mensaje {
+            display: flex;
+            flex-direction: column;
+            justify-items: center;
+            align-items: center;
+            margin-top: 20px;
+            font-size:27px;
+        } 
+        .mensaje img {
+            width: 80px;
+            margin-top: 20px;  
+        }
+        .mensaje span {
+            color: brown;
+        }
+        .loader {
+            width: 40px;
+            margin: 15px auto;
+            display: none;
+        } 
+    </style>
+    <script>
+     this.onload = comienzaJuego;
+     this.onload = compruebaCookie;
+        //COMPROBAR SI HAY COOKIE PREVIA
+            function compruebaCookie() {
+            var comprobacion_cookie = window.localStorage.getItem("Nombre del jugador");
+            console.log(comprobacion_cookie);
+            // SI HAY NO COOKIE NO HACER NADA
+            if ((comprobacion_cookie == "SIN-JUGADOR") || (!comprobacion_cookie)) {                       
+            } 
+            else { // SI HAY COOKIE, REDIRECCIONAR
+                document.getElementById('container_input').innerHTML = "Bienvenido " + comprobacion_cookie + "<br /> vas a ser redirigido a la pantalla del juego";
+                document.getElementById('loader').style.display="block";
+                document.getElementById('mensaje').style.display="none";
+                setInterval(function(){ window.location.href = 'juego.html'; }, 2000);
+            } 
+        }   
+        //AL PULSAR EN 'COMENZAR', ESCRIBIR 'COOKIE' Y REDIRECCIONAR
+        function comienzaJuego() {
+            var nombre = document.getElementById('nombre_jugador').value;
+            if (nombre == "") { // VALIDO QUE SE INTRODUZCA UN TEXTO EN EL CAMPO 'NOMBRE'; SI NO HAY TEXTO MUESTA ERROR
+                
+                document.getElementById('mensaje').innerHTML = "<span>Por favor, introduce tu nombre</span>";
+            }
+            else {
+                localStorage.setItem('Nombre del jugador', nombre);
+                console.log('nombre jugador =' + nombre);
+                document.getElementById('container_input').innerHTML = "Bienvenido " + nombre + "<br /> vas a ser redirigido a la pantalla del juego";
+                document.getElementById('loader').style.display="block";
+                document.getElementById('mensaje').style.display="none";
+                setInterval(function(){ window.location.href = 'juego.html'; }, 2000);
+            } 
+            
+        }   
+    </script>
+    
+</head>
+<body>
+    <div class="container">
+        <div id="container_input" class="container_input">
+            <label for="nombre">Por favor, dime tu nombre:</label>
+            <input id="nombre_jugador" type="text" name="nombre">
+            <input type="submit" onclick="comienzaJuego()" value="Comenzar">
+            
+        </div>
+        <img id="loader" class="loader" src="img/loader.gif">
+
+    
+        <div id="mensaje" class="mensaje">
+
+        </div>
+    </div>
+    
+    
+    
+</body>
+</html>
