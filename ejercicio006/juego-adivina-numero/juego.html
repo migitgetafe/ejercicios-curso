@@ -15,7 +15,9 @@
             color: gold;
             font-family: 'Quicksand', sans-serif;
             font-size: 30px;
-            font-weight: 700;   
+            font-weight: 700;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;   
         }
         .container_input {
             display: flex;
@@ -28,8 +30,13 @@
             font-size: 20px;
             padding:8px 0;
         }
+        input[type="number"] {
+            margin-top: 20px;
+        }
         input[type="submit"] {
+            width: 259px;
             margin-top: 10px;
+            margin-bottom: 10px;
             background-color: silver;
             color: black;
             border: none;
@@ -37,7 +44,13 @@
             line-height: 40px;
             font-size: 20px;
             padding: 0 10px;
-        } 
+            cursor: pointer;
+            transition: all ease 0.15s;
+        }
+        input[type="submit"]:hover {
+            transform: translateY(1px);
+            box-shadow: 3px 4px 5px black;
+        }
         .container{
             display: flex;
             flex-direction: column;
@@ -52,7 +65,11 @@
             align-items: center;
             margin-top: 20px;
             font-size:27px;
-        } 
+        }
+        .marcador_vidas span {
+            color: orange;
+            font-size: 40px;
+        }
         .marcador_vidas img {
             width: 80px;
             margin-top: 20px;  
@@ -62,9 +79,7 @@
         }
     </style>
     <script>
-        window.onload = compruebaCookie(); // COMPRUEBA QUE HAY UNA COOKIE CON CONTENIDO, SI NO LA HAY REDIRECCION A INICIO
-        window.onload = adivinaNumero;
-        
+        window.onload = compruebaCookie(); // COMPRUEBA QUE HAY UNA COOKIE CON CONTENIDO, SI NO LA HAY REDIRECCION A INICIO      
         var comprobacion_cookie = window.localStorage.getItem("Nombre del jugador");
         
         // COMPRUEBO QUE TENGO UNA COOKIE CON CONTENIDO
@@ -74,7 +89,7 @@
             
             // SI NO HAY COOKIE redireccionar
              if ((comprobacion_cookie == "SIN-JUGADOR") || (!comprobacion_cookie)) {
-                window.location.href = 'intro-juego.html'                     
+                window.location.href = 'intro-juego.html';                     
             } 
             else { // SI HAY COOKIE, no hacer nada 
              } 
@@ -85,14 +100,16 @@
         var numero = Math.round(numero_aleatorio);
         console.log("numero aleatorio =" + numero);
         var score = 5; // INICIALIZO VARIABLE CON NÚMERO DE VIDAS ('SCORE')
-        
+        // INICIALIZO ARRAY DE NÚMEROS INTRODUCIDOS POR EL JUGADOR
+        var numeros_jugados = [];
+
         function adivinaNumero() {
-            // FUNCION QUE MUESTRA MNENSAJE FINAL Y NÚMERO CORRECTO
+            // FUNCION QUE MUESTRA MENSAJE FINAL Y NÚMERO CORRECTO
             function mensajeFin() {
                     var input_numero = document.getElementById("container_input");
                     input_numero.style.display="none";
                     var marcador = document.getElementById('marcador_vidas');
-                    marcador.innerHTML = "HAS FALLADO! <br /><img src='img/derrota.png'><br />El número correcto era " + numero;
+                    marcador.innerHTML = "HAS FALLADO! <br /><img src='img/derrota.png'><br />El número correcto era <span>"+numero+"</span>";
                     finDeJuego();
                 }
             // MENSAJE BIENVENIDA
@@ -107,6 +124,7 @@
             if(!numeroJugador) {
                 console.log("no hay numero");
             }
+             
             // SI LOS NÚMEROS COINCIDEN
             else if (numero == numeroJugador) {
                 marcador.innerHTML = 'NÚMERO ACERTADO <br /> <img src="img/victoria.png">';
@@ -134,6 +152,7 @@
                 marcador.innerHTML = "El número ES MENOR <br /> Vidas restantes: " + score;
                 console.log("es mayor");
                 console.log(score);
+
                 // Y SI ADEMÁS LOS INTENTOS HAN LLEGADO A CERO --> FIN DEL JUEGO
                 if (score == 0) {
                     mensajeFin();
@@ -145,15 +164,24 @@
                 document.getElementById('mensaje').style.display = "none";
                   
             }
+            // introduzco número jugado (numeroJugador) en array de números jugados
+            numeros_jugados.push(numeroJugador);
+            console.log("Numeros jugados " + numeros_jugados);
+            // ...lo ordeno...
+            numeros_jugados.sort();
+            // ...y lo muestro en pantalla
+            if(numeros_jugados == ""){
+            } 
+            else{
+                document.getElementById('numeros_jugados').innerHTML = "Números jugados: " + numeros_jugados;
+            }  
         }
         // AL PULSAR EN 'CAMBIAR JUGADOR' REDIRECCIONO A LA PANTALLA DE INICIO
         function cambiarJugador() {
             localStorage.clear();
             localStorage.setItem('Nombre del jugador', 'SIN-JUGADOR');
             window.location.href = 'intro-juego.html';
-        }
-        
-        
+        }    
     </script>
     
 </head>
@@ -171,7 +199,7 @@
         <div id="marcador_vidas" class="marcador_vidas">
 
         </div>
-        <div id="numeros_introducidos" class="numeros_introducidos">
+        <div id="numeros_jugados" class="numeros_jugados">
 
         </div>
         <div id="cambiar_jugador" class="cambiar_jugador">

@@ -76,7 +76,7 @@
             function compruebaCookie() {
             var comprobacion_cookie = window.localStorage.getItem("Nombre del jugador");
             console.log(comprobacion_cookie);
-            // SI HAY NO COOKIE NO HACER NADA
+            // SI NO HAY COOKIE NO HACER NADA
             if ((comprobacion_cookie == "SIN-JUGADOR") || (!comprobacion_cookie)) {                       
             } 
             else { // SI HAY COOKIE, REDIRECCIONAR
@@ -111,18 +111,11 @@
         <div id="container_input" class="container_input">
             <label for="nombre">Por favor, dime tu nombre:</label>
             <input id="nombre_jugador" type="text" name="nombre">
-            <input type="submit" onclick="comienzaJuego()" value="Comenzar">
-            
+            <input type="submit" onclick="comienzaJuego()" value="Comenzar">  
         </div>
         <img id="loader" class="loader" src="img/loader.gif">
-
-    
         <div id="mensaje" class="mensaje">
-
         </div>
-    </div>
-    
-    
-    
+    </div>  
 </body>
 </html>
